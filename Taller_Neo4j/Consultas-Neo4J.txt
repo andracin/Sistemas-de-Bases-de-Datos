@@ -1,0 +1,287 @@
+MATCH (n)-[r]->(m) DELETE n, r, m;
+
+MATCH (n) DELETE n;
+
+
+
+
+
+CREATE (r:RatingSource { Source: 'Internet Movie Database' } );
+
+CREATE (r:RatingSource { Source: 'Rotten Tomatoes' } );
+
+CREATE (r:RatingSource { Source: 'Metacritic' } );
+
+
+
+CREATE (g:Genre {Genre : 'Action' });
+
+CREATE (g:Genre {Genre : 'Adventure' });
+
+CREATE (g:Genre {Genre : 'Sci-Fi' });
+
+CREATE (g:Genre {Genre : 'Drama' });
+
+CREATE (g:Genre {Genre :'Biography'});
+
+
+
+CREATE (p:Person { Name: 'Tim Burton' } );
+
+CREATE (p:Person { Name: 'Mark Wahlberg' } );
+
+CREATE (p:Person { Name: 'Tim Roth' } );
+
+CREATE (p:Person { Name: 'Helena Bonham Carter' } );
+
+CREATE (p:Person { Name: 'Michael Clarke Duncan' } );
+
+
+
+CREATE (m:Movie { Title:  'Planet of the Apes', Year:2001, Runtime: '119 min', Plot: 'An Air Force astronaut crash lands on a mysterious planet where evolved, talking apes dominate a race of primitive humans. ', Country: 'USA'  });
+
+
+
+MATCH (m:Movie), (p:Person)
+
+WHERE m.Title = 'Planet of the Apes' AND p.Name = 'Tim Burton'
+
+CREATE (m)-[r:Director ]->(p);
+
+
+
+MATCH (m:Movie), (p:Person)
+
+WHERE m.Title = 'Planet of the Apes' AND p.Name = 'Mark Wahlberg'
+
+CREATE (m)-[s:Actor]->(p);
+
+
+
+MATCH (m:Movie), (p1:Person), (p2:Person), (p3:Person)
+
+WHERE m.Title = 'Planet of the Apes' AND p1.Name = 'Tim Roth'
+
+AND p2.Name = 'Helena Bonham Carter'
+
+AND p3.Name = 'Michael Clarke Duncan'
+
+CREATE (m)-[s1:Actor]->(p1), (m)-[s2:Actor]->(p2),(m)-[s3:Actor]->(p3);
+
+
+
+MATCH (m:Movie), (r:RatingSource)
+
+WHERE m.Title = 'Planet of the Apes' AND r.Source='Internet Movie Database'
+
+CREATE (m)-[rel:Rating {Value: 5.7} ]->(r);
+
+
+
+MATCH (m:Movie), (r1:RatingSource), (r2:RatingSource)
+
+WHERE m.Title = 'Planet of the Apes' AND r1.Source='Rotten Tomatoes'
+
+AND r2.Source='Metacritic' 
+
+CREATE (m)-[rel1:Rating {Value: 4.5}]->(r1), (m)-[rel2:Rating {Value: 5}]->(r2);
+
+
+
+MATCH (m:Movie), (g:Genre)
+
+WHERE m.Title = 'Planet of the Apes' AND g.Genre='Action'  
+
+CREATE (m)-[rel:Genre]->(g);
+
+
+
+MATCH (m:Movie), (g1:Genre), (g2:Genre)
+
+WHERE m.Title = 'Planet of the Apes' AND g1.Genre='Adventure' AND g2.Genre='Sci-Fi'
+
+CREATE (m)-[rel1:Genre]->(g1), (m)-[rel2:Genre]->(g2);
+
+
+
+
+
+CREATE (p:Person { Name: 'David Fincher' } );
+
+CREATE (p:Person { Name: 'Jesse Eisenberg' } );
+
+CREATE (p:Person { Name: 'Rooney Mara' } );
+
+CREATE (p:Person { Name: 'Bryan Barter' } );
+
+
+
+
+
+CREATE (m:Movie { Title:'The Social Network', Year:2010, Runtime: '120 min',
+
+Plot: 'Harvard student Mark Zuckerberg creates the social networking site that would become known as Facebook, but is later sued by two brothers who claimed he stole their idea, and the co-founder who was later squeezed out of the business.', Country: 'USA'  });
+
+
+
+MATCH (m:Movie), (p:Person)
+
+WHERE m.Title = 'The Social Network' AND p.Name = 'David Fincher'
+
+CREATE (m)-[r:Director ]->(p);
+
+
+
+MATCH (m:Movie), (p1:Person), (p2:Person), (p3:Person),  (p4:Person)
+
+WHERE m.Title = 'The Social Network' AND p1.Name = 'Jesse Eisenberg'
+
+AND p2.Name = 'Rooney Mara' AND p3.Name = 'Bryan Barter'
+
+AND p4.Name = 'Michael Clarke Duncan'
+
+CREATE (m)-[s1:Actor]->(p1), (m)-[s2:Actor]->(p2), (m)-[s3:Actor]->(p3), (m)-[s4:Actor]->(p4);
+
+
+
+MATCH (m:Movie), (g1:Genre), (g2:Genre)
+
+WHERE m.Title = 'The Social Network' AND g1.Genre='Biography' AND g2.Genre='Drama'
+
+CREATE (m)-[rel1:Genre]->(g1), (m)-[rel2:Genre]->(g2);
+
+
+
+MATCH (m:Movie), (r1:RatingSource), (r2:RatingSource), (r3:RatingSource)
+
+WHERE m.Title = 'The Social Network' 
+
+AND r1.Source='Internet Movie Database'
+
+AND r2.Source='Rotten Tomatoes'
+
+AND r3.Source='Metacritic'
+
+CREATE (m)-[rel1:Rating {Value: 7.7}]->(r1), (m)-[rel2:Rating {Value: 9.6}]->(r2), (m)-[rel3:Rating {Value: 9.5}]->(r3);
+
+
+
+
+
+
+
+CREATE (p:Person { Name: 'Steven Spielberg' } );
+
+CREATE (p:Person { Name: 'Haley Joel Osment' } );
+
+CREATE (p:Person { Name: 'Frances O\'Connor' } );
+
+CREATE (p:Person { Name: 'Sam Robards' } );
+
+CREATE (p:Person { Name: 'Jake Thomas' } );
+
+
+
+CREATE (m:Movie { Title:'A.I. Artificial Intelligence', Year:2001, Runtime: '146 min', 
+
+Plot: 'A highly advanced robotic boy longs to become real so that he can regain the love of his human mother.', Country: 'USA'  });
+
+
+
+MATCH (m:Movie), (p:Person)
+
+WHERE m.Title = 'A.I. Artificial Intelligence' AND p.Name = 'Steven Spielberg'
+
+CREATE (m)-[r:Director]->(p);
+
+
+
+MATCH (m:Movie), (p1:Person), (p2:Person), (p3:Person),  (p4:Person)
+
+WHERE m.Title = 'A.I. Artificial Intelligence' AND p1.Name = 'Haley Joel Osment'
+
+AND p2.Name = 'Frances O\'Connor' AND p3.Name = 'Sam Robards'
+
+AND p4.Name = 'Jake Thomas'
+
+CREATE (m)-[s1:Actor]->(p1), (m)-[s2:Actor]->(p2), (m)-[s3:Actor]->(p3), (m)-[s4:Actor]->(p4);
+
+
+
+MATCH (m:Movie), (g1:Genre), (g2:Genre), (g3:Genre)
+
+WHERE m.Title = 'A.I. Artificial Intelligence' AND g1.Genre='Adventure' AND g2.Genre='Drama' AND g3.Genre='Sci-Fi'
+
+CREATE (m)-[rel1:Genre]->(g1), (m)-[rel2:Genre]->(g2), (m)-[rel3:Genre]->(g3);
+
+
+
+MATCH (m:Movie), (r1:RatingSource), (r2:RatingSource), (r3:RatingSource)
+
+WHERE m.Title = 'A.I. Artificial Intelligence' 
+
+AND r1.Source='Internet Movie Database'
+
+AND r2.Source='Rotten Tomatoes'
+
+AND r3.Source='Metacritic'
+
+CREATE (m)-[rel1:Rating {Value: 7.1}]->(r1), (m)-[rel2:Rating {Value: 7.3}]->(r2), (m)-[rel3:Rating {Value: 6.5}]->(r3);
+
+
+
+
+
+
+
+CREATE (p:Person { Name: 'Stanley Kubrick' } );
+
+CREATE (p:Person { Name: 'Keir Dullea' } );
+
+CREATE (p:Person { Name: 'Gary Lockwood' } );
+
+CREATE (p:Person { Name: 'William Sylvester' } );
+
+
+
+CREATE (m:Movie { Title:'2001: A Space Odyssey', Year:1968, Runtime: '146 min', Plot: 'Humanity finds a mysterious, obviously artificial object buried beneath the Lunar surface and, with the intelligent computer H.A.L. 9000, sets off on a quest.', Country: 'USA'  });
+
+
+
+MATCH (m:Movie), (p:Person)
+
+WHERE m.Title = '2001: A Space Odyssey' AND p.Name = 'Stanley Kubrick'
+
+CREATE (m)-[r:Director ]->(p);
+
+
+
+MATCH (m:Movie), (p1:Person), (p2:Person), (p3:Person)
+
+WHERE m.Title = '2001: A Space Odyssey' AND p1.Name = 'Keir Dullea'
+
+AND p2.Name = 'Gary Lockwood' AND p3.Name = 'William Sylvester'
+
+CREATE (m)-[s1:Actor]->(p1), (m)-[s2:Actor]->(p2), (m)-[s3:Actor]->(p3);
+
+
+
+MATCH (m:Movie), (g1:Genre), (g2:Genre)
+
+WHERE m.Title = '2001: A Space Odyssey' AND g1.Genre='Adventure' AND g2.Genre='Sci-Fi'
+
+CREATE (m)-[rel1:Genre]->(g1), (m)-[rel2:Genre]->(g2);
+
+
+
+MATCH (m:Movie), (r1:RatingSource), (r2:RatingSource), (r3:RatingSource)
+
+WHERE m.Title = '2001: A Space Odyssey' 
+
+AND r1.Source='Internet Movie Database'
+
+AND r2.Source='Rotten Tomatoes'
+
+AND r3.Source='Metacritic'
+
+CREATE (m)-[rel1:Rating {Value: 8.3}]->(r1), (m)-[rel2:Rating {Value: 9.4}]->(r2), (m)-[rel3:Rating {Value: 8.6}]->(r3);
