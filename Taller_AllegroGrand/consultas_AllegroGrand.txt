@@ -1,0 +1,48 @@
+# View triples
+prefix  class:   <http://example.com/class/>
+prefix  rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix  prop: <http://example.com/property/>
+select ?nomProd ?status  ?city  ?category                
+where {   
+        
+        ?order  prop:client ?client .
+        ?client prop:userName ?userName .
+        ?order  prop:product ?product .
+        ?product prop:name ?nomProd .
+        ?order  prop:city ?city .
+        ?order  prop:status   ?status .
+        ?product prop:category ?category
+        filter(?status ='EnProceso' && ?city = 'Cali' && ?category = 'Deportes')}  
+
+prefix  class:   <http://example.com/class/>
+prefix  rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix  prop: <http://example.com/property/>
+select  ?userName2 
+where {   ?order prop:status ?status .
+          ?order prop:client ?client .
+          ?client prop:userName ?userName .
+          ?order prop:product ?product .
+          ?product prop:name ?nomProd .
+          ?order2 prop:status ?status2 .
+          ?order2 prop:client ?client2 .
+          ?client2 prop:userName ?userName2 .
+          ?order2 prop:product ?product2 .
+          ?product2 prop:name ?nomProd2
+        filter(?userName = "Timothy" && ?userName2 != ?userName && ?nomProd = ?nomProd2) }
+        group by ?userName2
+        
+
+prefix  class:   <http://example.com/class/>
+prefix  rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix  prop: <http://example.com/property/>
+select  distinct ?numOrder ?nomProd  ?nomProd2 ?status ?date
+where {  ?order prop:status ?status .
+         ?order prop:numOrder ?numOrder .
+         ?order prop:product ?product .
+          ?order prop:date  ?date .
+          ?product prop:name ?nomProd .
+          ?order prop:product ?product2 . 
+          ?product2 prop:name ?nomProd2 .
+        filter(?status = 'Finalizada' &&   ?nomProd != ?nomProd2 && ?date >='2017-01-01'^^xs:date &&
+              ?date<= '2017-12-31'^^xs:date) }
+        group by ?numOrder ?nomProd  ?nomProd2 ?status ?date
